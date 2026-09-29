@@ -1,144 +1,315 @@
 ---
 const cols = [
-  ['Hotel', 'Hotel'], ['Taxi', 'Taxi'], ['Desayuno', 'Breakfast /Desayuno'], ['Almuerzo', 'Lunch/Almuerzo'],
-  ['Cena', 'Dinner/Cena'], ['Garaje', 'Garage/ Garaje'], ['Transporte', 'Transport/ Transporte'],
-  ['Lavandería', 'Laundry/ Lavandería'], ['Otros', 'Others / Otros'],
+    ["Hotel", "Hotel"],
+    ["Taxi", "Taxi"],
+    ["Desayuno", "Breakfast /Desayuno"],
+    ["Almuerzo", "Lunch/Almuerzo"],
+    ["Cena", "Dinner/Cena"],
+    ["Garaje", "Garage/ Garaje"],
+    ["Transporte", "Transport/ Transporte"],
+    ["Lavandería", "Laundry/ Lavandería"],
+    ["Otros", "Others / Otros"],
 ];
 ---
+
 <!doctype html>
 <html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Solicitud de Viático</title>
-</head>
-<body>
-  <main class="form-area noprint">
-    <h1>Solicitud de viático</h1>
-    <p class="sub">Llená el formulario; la vista previa de abajo se actualiza sola. Los datos se guardan en este navegador.</p>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Solicitud de Viático</title>
+    </head>
+    <body>
+        <main class="form-area noprint">
+            <h1>Solicitud de viático</h1>
+            <p class="sub">
+                Llená el formulario; la vista previa de abajo se actualiza sola.
+                Los datos se guardan en este navegador.
+            </p>
 
-    <section class="card">
-      <h2>Datos del viático</h2>
-      <div class="grid g2">
-        <label>Propósito<input data-f="purpose" placeholder="Viáticos de hospedaje y alimentación" /></label>
-        <label>Plan<input data-f="plan" placeholder="Atención 29279934 CONS0041 Waslala…" /></label>
-      </div>
-      <p class="range">Desde: <b id="f-from">—</b> &nbsp; Hasta: <b id="f-to">—</b> <small>(se calculan con las fechas de las filas)</small></p>
-    </section>
+            <section class="card">
+                <h2>Datos del viático</h2>
+                <div class="grid g2">
+                    <label>
+                        Propósito
+                        <input
+                            data-f="purpose"
+                            placeholder="Viáticos de hospedaje y alimentación"
+                        />
+                    </label>
+                    <label>
+                        Plan
+                        <input
+                            data-f="plan"
+                            placeholder="Atención 29279934 CONS0041 Waslala…"
+                        />
+                    </label>
+                </div>
+                <p class="range">
+                    Desde: <b id="f-from">—</b> &nbsp; Hasta: <b id="f-to">—</b>{" "}
+                    <small>(se calculan con las fechas de las filas)</small>
+                </p>
+            </section>
 
-    <section class="card">
-      <h2>Empleado</h2>
-      <div class="grid g4">
-        <label>Nombre<input data-f="name" /></label>
-        <label>Cargo<input data-f="position" /></label>
-        <label>Departamento<input data-f="dept" /></label>
-        <label>Gerente<input data-f="manager" /></label>
-      </div>
-    </section>
+            <section class="card">
+                <h2>Empleado</h2>
+                <div class="grid g4">
+                    <label>
+                        Nombre
+                        <input data-f="name" />
+                    </label>
+                    <label>
+                        Cargo
+                        <input data-f="position" />
+                    </label>
+                    <label>
+                        Departamento
+                        <input data-f="dept" />
+                    </label>
+                    <label>
+                        Gerente
+                        <input data-f="manager" />
+                    </label>
+                </div>
+            </section>
 
-    <section class="card">
-      <h2>Gastos por día</h2>
-      <div id="rows-form"></div>
-      <button id="add" type="button" class="btn">+ Agregar fila</button>
-    </section>
+            <section class="card">
+                <h2>Gastos por día</h2>
+                <div id="rows-form"></div>
+                <button id="add" type="button" class="btn">
+                    + Agregar día
+                </button>
+            </section>
 
-    <section class="card">
-      <h2>Cierre</h2>
-      <div class="grid g2">
-        <label>Notas<textarea data-f="notes" rows="2"></textarea></label>
-        <label>Anticipos (C$)<input data-f="adv" type="number" min="0" step="0.01" /></label>
-      </div>
-    </section>
+            <section class="card">
+                <h2>Cierre</h2>
+                <div class="grid g2">
+                    <label>
+                        Notas<textarea data-f="notes" rows="2"></textarea>
+                    </label>
+                    <label>
+                        Anticipos (C$)
+                        <input data-f="adv" type="number" min="0" step="0.01" />
+                    </label>
+                </div>
+            </section>
 
-    <div class="actions">
-      <button id="print" type="button" class="btn primary">Imprimir / Guardar PDF</button>
-      <button id="reset" type="button" class="btn">Limpiar formulario</button>
-      <span class="hint">En el diálogo: destino «Guardar como PDF», horizontal, «Gráficos de fondo» activado.</span>
-    </div>
+            <div class="actions">
+                <button id="print" type="button" class="btn primary">
+                    Imprimir / Guardar PDF
+                </button>
+                <button id="reset" type="button" class="btn">
+                    Limpiar formulario
+                </button>
+                <span class="hint">
+                    En el diálogo: destino «Guardar como PDF», horizontal,
+                    «Gráficos de fondo» activado.
+                </span>
+            </div>
 
-    <h2 class="pvt">Vista previa</h2>
-  </main>
+            <h2 class="pvt">Vista previa</h2>
+        </main>
 
-  <div class="sheet">
-    <div class="top">
-      <div class="logo-space"><img src="/logo.png" alt="" onerror="this.style.display='none'" /></div>
-      <div class="company">CONSUL TIC S,A.<br />SOLICITUD DE VIATICO</div>
-      <div></div>
-    </div>
+        <div class="sheet">
+            <div class="top">
+                <div class="logo-space">
+                    <img
+                        src="/logo.png"
+                        alt=""
+                        onerror="this.style.display='none'"
+                    />
+                </div>
+                <div class="company">
+                    CONSUL TIC S,A.
+                    <br />
+                    SOLICITUD DE VIATICO
+                </div>
+                <div></div>
+            </div>
 
-    <div class="r1">
-      <div class="line"><span class="lbl">PURPOSE/PROPOSITO:</span> <span class="val" id="p-purpose"></span></div>
-      <div class="line"><span class="lbl">PLAN</span> <span class="val" id="p-plan"></span></div>
-      <div class="dates">
-        <div><b>From / Desde:</b><span id="p-from"></span></div>
-        <div><b>To/Hasta:</b><span id="p-to"></span></div>
-      </div>
-    </div>
+            <div class="r1">
+                <div class="line">
+                    <span class="lbl">PURPOSE/PROPOSITO:</span>{" "}
+                    <span class="val" id="p-purpose"></span>
+                </div>
+                <div class="line">
+                    <span class="lbl">PLAN</span>{" "}
+                    <span class="val" id="p-plan"></span>
+                </div>
+                <div class="dates">
+                    <div>
+                        <b>From / Desde:</b>
+                        <span id="p-from"></span>
+                    </div>
+                    <div>
+                        <b>To/Hasta:</b>
+                        <span id="p-to"></span>
+                    </div>
+                </div>
+            </div>
 
-    <div class="emp-title">EMPLOYEE INFORMATION/INFORMACION DEL EMPLEADO:</div>
-    <div class="emp">
-      <div class="cell l"><span>Name/Nombre:</span> <span class="val" id="p-name"></span></div>
-      <div class="cell r"><span>Position/Cargo:</span> <span class="val" id="p-position"></span></div>
-      <div class="cell l"><span>Department/Departamento:</span> <span class="val" id="p-dept"></span></div>
-      <div class="cell r"><span>Manager/Gerente:</span> <span class="val" id="p-manager"></span></div>
-    </div>
+            <div class="emp-title">
+                EMPLOYEE INFORMATION/INFORMACION DEL EMPLEADO:
+            </div>
+            <div class="emp">
+                <div class="cell l">
+                    <span>Name/Nombre:</span>{" "}
+                    <span class="val" id="p-name"></span>
+                </div>
+                <div class="cell r">
+                    <span>Position/Cargo:</span>{" "}
+                    <span class="val" id="p-position"></span>
+                </div>
+                <div class="cell l">
+                    <span>Department/Departamento:</span>{" "}
+                    <span class="val" id="p-dept"></span>
+                </div>
+                <div class="cell r">
+                    <span>Manager/Gerente:</span>{" "}
+                    <span class="val" id="p-manager"></span>
+                </div>
+            </div>
 
-    <table class="main">
-      <colgroup>
-        <col style="width:8%" /><col style="width:8%" /><col style="width:8%" /><col style="width:6%" />
-        <col style="width:7%" /><col style="width:7%" /><col style="width:7%" /><col style="width:5.5%" />
-        <col style="width:6%" /><col style="width:5.5%" /><col style="width:5.5%" /><col style="width:9%" /><col style="width:12.5%" />
-      </colgroup>
-      <thead>
-        <tr>
-          <th>DEPARTAMENTO</th><th>Date/Fecha</th>
-          {cols.map((c) => <th>{c[1]}</th>)}
-          <th>Total</th><th>OBSERVACIONES</th>
-        </tr>
-      </thead>
-      <tbody id="p-rows"></tbody>
-      <tfoot>
-        <tr class="sum">
-          <td colspan="2" class="white"></td>
-          {cols.map((_, i) => <td data-sum={i}></td>)}
-          <td class="dark"></td><td class="white"></td>
-        </tr>
-      </tfoot>
-    </table>
+            <table class="main">
+                <colgroup>
+                    <col style="width:8%" />
+                    <col style="width:8%" />
+                    <col style="width:8%" />
+                    <col style="width:6%" />
+                    <col style="width:7%" />
+                    <col style="width:7%" />
+                    <col style="width:7%" />
+                    <col style="width:5.5%" />
+                    <col style="width:6%" />
+                    <col style="width:5.5%" />
+                    <col style="width:5.5%" />
+                    <col style="width:9%" />
+                    <col style="width:12.5%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>DEPARTAMENTO</th>
+                        <th>Date/Fecha</th>
+                        {cols.map((c) => (
+                            <th>{c[1]}</th>
+                        ))}
+                        <th>Total</th>
+                        <th>OBSERVACIONES</th>
+                    </tr>
+                </thead>
+                <tbody id="p-rows"></tbody>
+                <tfoot>
+                    <tr class="sum">
+                        <td colspan="2" class="white"></td>
+                        {cols.map((_, i) => (
+                            <td data-sum={i}></td>
+                        ))}
+                        <td class="dark"></td>
+                        <td class="white"></td>
+                    </tr>
+                </tfoot>
+            </table>
 
-    <div class="totals">
-      <div class="notes"><span class="lbl">NOTES / NOTA:</span><div class="nl" id="p-notes"></div></div>
-      <div class="tl">
-        <div class="t"><span>Subtotal</span><b id="p-subtotal"></b></div>
-        <div class="t"><span>Advances/Anticipos</span><b class="adv" id="p-adv"></b></div>
-        <div class="t"><span>Total</span><b id="p-total"></b></div>
-      </div>
-    </div>
+            <div class="totals">
+                <div class="notes">
+                    <span class="lbl">NOTES / NOTA:</span>
+                    <div class="nl" id="p-notes"></div>
+                </div>
+                <div class="tl">
+                    <div class="t">
+                        <span>Subtotal</span>
+                        <b id="p-subtotal"></b>
+                    </div>
+                    <div class="t">
+                        <span>Advances/Anticipos</span>
+                        <b class="adv" id="p-adv"></b>
+                    </div>
+                    <div class="t">
+                        <span>Total</span>
+                        <b id="p-total"></b>
+                    </div>
+                </div>
+            </div>
 
-    <div class="sign">
-      <div>SOLICITANTE</div><div>JEFE INMEDIATO</div><div>ADMINISTRADOR</div>
-      <div><span>APPROVED / APROBADO:</span><span>CFO / GERENTE GENERAL</span></div>
-    </div>
-  </div>
+            <div class="sign">
+                <div>SOLICITANTE</div>
+                <div>JEFE INMEDIATO</div>
+                <div>ADMINISTRADOR</div>
+                <div>
+                    <span>APPROVED / APROBADO:</span>
+                    <span>CFO / GERENTE GENERAL</span>
+                </div>
+            </div>
+        </div>
 
-  <script define:vars={{ LABELS: cols.map((c) => c[0]) }}>
-    const N = LABELS.length, KEY = 'viatico-draft';
-    const $ = (s, r = document) => r.querySelector(s);
-    const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-    const num = (v) => parseFloat(v) || 0;
-    const fmt = (n) => n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const money = (n) => 'C$' + fmt(n);
-    const fmtDate = (iso) => (iso ? iso.split('-').map((p, i) => (i === 0 ? p : String(+p))).reverse().join('/') : '');
-    const blankRow = () => ({ dep: '', date: '', m: Array(N).fill(''), obs: '' });
-    const blank = () => ({ purpose: '', plan: '', name: '', position: '', dept: '', manager: '', notes: '', adv: '', rows: [blankRow()] });
+        <script define:vars={{ LABELS: cols.map((c) => c[0]) }}>
+            const N = LABELS.length,
+                KEY = "viatico-draft";
+            const $ = (s, r = document) => r.querySelector(s);
+            const esc = (s) =>
+                String(s ?? "").replace(
+                    /[&<>"]/g,
+                    (c) =>
+                        ({
+                            "&": "&amp;",
+                            "<": "&lt;",
+                            ">": "&gt;",
+                            '"': "&quot;",
+                        })[c],
+                );
+            const num = (v) => parseFloat(v) || 0;
+            const fmt = (n) =>
+                n.toLocaleString("de-DE", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                });
+            const money = (n) => "C$" + fmt(n);
+            const fmtDate = (iso) =>
+                iso
+                    ? iso
+                          .split("-")
+                          .map((p, i) => (i === 0 ? p : String(+p)))
+                          .reverse()
+                          .join("/")
+                    : "";
+            const blankRow = () => ({
+                dep: "",
+                date: "",
+                m: Array(N).fill(""),
+                obs: "",
+            });
+            const blank = () => ({
+                purpose: "",
+                plan: "",
+                name: "",
+                position: "",
+                dept: "",
+                manager: "",
+                notes: "",
+                adv: "",
+                rows: [blankRow()],
+            });
 
-    let S;
-    try { S = { ...blank(), ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch { S = blank(); }
-    if (!Array.isArray(S.rows) || !S.rows.length) S.rows = [blankRow()];
-    const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch {} };
+            let S;
+            try {
+                S = {
+                    ...blank(),
+                    ...JSON.parse(localStorage.getItem(KEY) || "{}"),
+                };
+            } catch {
+                S = blank();
+            }
+            if (!Array.isArray(S.rows) || !S.rows.length) S.rows = [blankRow()];
+            const save = () => {
+                try {
+                    localStorage.setItem(KEY, JSON.stringify(S));
+                } catch {}
+            };
 
-    function renderForm() {
-      $('#rows-form').innerHTML = S.rows.map((r, i) => `
+            function renderForm() {
+                $("#rows-form").innerHTML = S.rows
+                    .map(
+                        (r, i) => `
         <div class="rowcard">
           <div class="rh"><b>Fila ${i + 1}</b><button type="button" class="rm" data-rm="${i}" title="Quitar fila">Quitar ×</button></div>
           <div class="grid g3">
@@ -147,142 +318,489 @@ const cols = [
             <label>Observaciones<input data-i="${i}" data-k="obs" value="${esc(r.obs)}" /></label>
           </div>
           <div class="grid g9">
-            ${LABELS.map((l, k) => `<label>${l}<input type="number" min="0" step="0.01" data-i="${i}" data-k="m${k}" value="${esc(r.m[k])}" /></label>`).join('')}
+            ${LABELS.map((l, k) => `<label>${l}<input type="number" min="0" step="0.01" data-i="${i}" data-k="m${k}" value="${esc(r.m[k])}" /></label>`).join("")}
           </div>
-        </div>`).join('');
-    }
+        </div>`,
+                    )
+                    .join("");
+            }
 
-    function renderPreview() {
-      for (const f of ['purpose', 'plan', 'name', 'position', 'dept', 'manager']) $('#p-' + f).textContent = S[f];
-      $('#p-notes').textContent = S.notes;
-      const colT = Array(N).fill(0);
-      const dates = [];
-      let grand = 0;
-      const used = S.rows;
-      const html = used.map((r) => {
-        const rt = r.m.reduce((a, v) => a + num(v), 0);
-        r.m.forEach((v, k) => (colT[k] += num(v)));
-        grand += rt;
-        if (r.date) dates.push(r.date);
-        return `<tr><td>${esc(r.dep)}</td><td class="date">${fmtDate(r.date)}</td>
-          ${r.m.map((v) => `<td class="in">${num(v) ? `<div class="cur"><span>C$</span><span>${fmt(num(v))}</span></div>` : ''}</td>`).join('')}
-          <td class="tot">${rt ? money(rt) : ''}</td><td class="obs">${esc(r.obs)}</td></tr>`;
-      }).join('');
-      $('#p-rows').innerHTML = html;
-      document.querySelectorAll('[data-sum]').forEach((td) => (td.textContent = money(colT[+td.dataset.sum])));
-      $('.sum .dark').textContent = '';
-      const adv = num(S.adv);
-      $('#p-subtotal').textContent = money(grand);
-      $('#p-adv').textContent = adv ? money(adv) : '';
-      $('#p-total').textContent = money(grand - adv);
-      dates.sort();
-      const from = fmtDate(dates[0]), to = fmtDate(dates[dates.length - 1]);
-      $('#p-from').textContent = from; $('#p-to').textContent = to;
-      $('#f-from').textContent = from || '—'; $('#f-to').textContent = to || '—';
-    }
+            function renderPreview() {
+                for (const f of [
+                    "purpose",
+                    "plan",
+                    "name",
+                    "position",
+                    "dept",
+                    "manager",
+                ])
+                    $("#p-" + f).textContent = S[f];
+                $("#p-notes").textContent = S.notes;
+                const colT = Array(N).fill(0);
+                const dates = [];
+                let grand = 0;
+                const used = S.rows;
+                const html = used
+                    .map((r) => {
+                        const rt = r.m.reduce((a, v) => a + num(v), 0);
+                        r.m.forEach((v, k) => (colT[k] += num(v)));
+                        grand += rt;
+                        if (r.date) dates.push(r.date);
+                        return `<tr><td>${esc(r.dep)}</td><td class="date">${fmtDate(r.date)}</td>
+          ${r.m.map((v) => `<td class="in">${num(v) ? `<div class="cur"><span>C$</span><span>${fmt(num(v))}</span></div>` : ""}</td>`).join("")}
+          <td class="tot">${rt ? money(rt) : ""}</td><td class="obs">${esc(r.obs)}</td></tr>`;
+                    })
+                    .join("");
+                $("#p-rows").innerHTML = html;
+                document
+                    .querySelectorAll("[data-sum]")
+                    .forEach(
+                        (td) => (td.textContent = money(colT[+td.dataset.sum])),
+                    );
+                $(".sum .dark").textContent = "";
+                const adv = num(S.adv);
+                $("#p-subtotal").textContent = money(grand);
+                $("#p-adv").textContent = adv ? money(adv) : "";
+                $("#p-total").textContent = money(grand - adv);
+                dates.sort();
+                const from = fmtDate(dates[0]),
+                    to = fmtDate(dates[dates.length - 1]);
+                $("#p-from").textContent = from;
+                $("#p-to").textContent = to;
+                $("#f-from").textContent = from || "—";
+                $("#f-to").textContent = to || "—";
+            }
 
-    function fillHeader() { document.querySelectorAll('[data-f]').forEach((el) => (el.value = S[el.dataset.f] ?? '')); }
+            function fillHeader() {
+                document
+                    .querySelectorAll("[data-f]")
+                    .forEach((el) => (el.value = S[el.dataset.f] ?? ""));
+            }
 
-    document.addEventListener('input', (e) => {
-      const el = e.target;
-      if (el.dataset.f) S[el.dataset.f] = el.value;
-      else if (el.dataset.k) {
-        const r = S.rows[+el.dataset.i], k = el.dataset.k;
-        if (k[0] === 'm' && k.length <= 3 && !isNaN(+k.slice(1)) && k !== 'dep') r.m[+k.slice(1)] = el.value; else r[k] = el.value;
-      } else return;
-      save(); renderPreview();
-    });
-    $('#add').addEventListener('click', () => { S.rows.push(blankRow()); save(); renderForm(); renderPreview(); });
-    $('#rows-form').addEventListener('click', (e) => {
-      const b = e.target.closest('[data-rm]');
-      if (!b) return;
-      S.rows.splice(+b.dataset.rm, 1);
-      if (!S.rows.length) S.rows.push(blankRow());
-      save(); renderForm(); renderPreview();
-    });
-    $('#reset').addEventListener('click', () => {
-      if (!confirm('¿Borrar todo lo escrito en el formulario?')) return;
-      S = blank(); save(); fillHeader(); renderForm(); renderPreview();
-    });
-    $('#print').addEventListener('click', () => window.print());
-    fillHeader(); renderForm(); renderPreview();
-  </script>
-</body>
+            document.addEventListener("input", (e) => {
+                const el = e.target;
+                if (el.dataset.f) S[el.dataset.f] = el.value;
+                else if (el.dataset.k) {
+                    const r = S.rows[+el.dataset.i],
+                        k = el.dataset.k;
+                    if (
+                        k[0] === "m" &&
+                        k.length <= 3 &&
+                        !isNaN(+k.slice(1)) &&
+                        k !== "dep"
+                    )
+                        r.m[+k.slice(1)] = el.value;
+                    else r[k] = el.value;
+                } else return;
+                save();
+                renderPreview();
+            });
+            $("#add").addEventListener("click", () => {
+                S.rows.push(blankRow());
+                save();
+                renderForm();
+                renderPreview();
+            });
+            $("#rows-form").addEventListener("click", (e) => {
+                const b = e.target.closest("[data-rm]");
+                if (!b) return;
+                S.rows.splice(+b.dataset.rm, 1);
+                if (!S.rows.length) S.rows.push(blankRow());
+                save();
+                renderForm();
+                renderPreview();
+            });
+            $("#reset").addEventListener("click", () => {
+                if (!confirm("¿Borrar todo lo escrito en el formulario?"))
+                    return;
+                S = blank();
+                save();
+                fillHeader();
+                renderForm();
+                renderPreview();
+            });
+            $("#print").addEventListener("click", () => window.print());
+            fillHeader();
+            renderForm();
+            renderPreview();
+        </script>
+    </body>
 </html>
 
 <style is:global>
-  @page { size: letter landscape; margin: 10mm; }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; background: #eef0f4; }
-  body { font-family: Calibri, Carlito, Arial, sans-serif; font-size: 11px; color: #222; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page {
+        size: letter landscape;
+        margin: 10mm;
+    }
+    * {
+        box-sizing: border-box;
+    }
+    html,
+    body {
+        margin: 0;
+        background: #eef0f4;
+    }
+    body {
+        font-family: Calibri, Carlito, Arial, sans-serif;
+        font-size: 11px;
+        color: #222;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
 
-  /* Formulario */
-  .form-area { max-width: 1100px; margin: 0 auto; padding: 16px 12px 0; font-size: 14px; }
-  h1 { margin: 0; font-size: 22px; color: #0b2a6b; }
-  h2 { margin: 0 0 10px; font-size: 15px; color: #0b2a6b; }
-  .sub { margin: 4px 0 14px; color: #666; }
-  .card { background: #fff; border-radius: 8px; padding: 14px; margin-bottom: 12px; box-shadow: 0 1px 4px #0002; }
-  .grid { display: grid; gap: 10px; }
-  .g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: 1fr 160px 1fr; }
-  .g4 { grid-template-columns: repeat(4, 1fr); } .g9 { grid-template-columns: repeat(9, 1fr); margin-top: 10px; }
-  label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: #555; font-weight: 600; }
-  .form-area input, .form-area textarea { font: inherit; font-size: 14px; font-weight: 400; color: #222; padding: 7px 8px; border: 1px solid #c5cad6; border-radius: 6px; width: 100%; background: #fff; }
-  .form-area input:focus, .form-area textarea:focus { outline: 2px solid #0b2a6b55; border-color: #0b2a6b; }
-  .range { margin: 10px 0 0; } .range small { color: #888; }
-  .rowcard { border: 1px solid #dde1ea; border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #fafbfd; }
-  .rh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-  .rm { border: 0; background: none; color: #b00; cursor: pointer; font: inherit; font-size: 12px; }
-  .btn { font: inherit; font-size: 14px; padding: 8px 14px; border: 1px solid #0b2a6b; background: #fff; color: #0b2a6b; border-radius: 6px; cursor: pointer; }
-  .btn.primary { background: #0b2a6b; color: #fff; }
-  .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .hint { font-size: 12px; color: #666; }
-  .pvt { margin: 22px 0 0; }
-  @media (max-width: 800px) { .g2, .g3, .g4 { grid-template-columns: 1fr; } .g9 { grid-template-columns: repeat(3, 1fr); } }
+    /* Formulario */
+    .form-area {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 16px 12px 0;
+        font-size: 14px;
+    }
+    h1 {
+        margin: 0;
+        font-size: 22px;
+        color: #0b2a6b;
+    }
+    h2 {
+        margin: 0 0 10px;
+        font-size: 15px;
+        color: #0b2a6b;
+    }
+    .sub {
+        margin: 4px 0 14px;
+        color: #666;
+    }
+    .card {
+        background: #fff;
+        border-radius: 8px;
+        padding: 14px;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 4px #0002;
+    }
+    .grid {
+        display: grid;
+        gap: 10px;
+    }
+    .g2 {
+        grid-template-columns: 1fr 1fr;
+    }
+    .g3 {
+        grid-template-columns: 1fr 160px 1fr;
+    }
+    .g4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .g9 {
+        grid-template-columns: repeat(9, 1fr);
+        margin-top: 10px;
+    }
+    label {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        font-size: 12px;
+        color: #555;
+        font-weight: 600;
+    }
+    .form-area input,
+    .form-area textarea {
+        font: inherit;
+        font-size: 14px;
+        font-weight: 400;
+        color: #222;
+        padding: 7px 8px;
+        border: 1px solid #c5cad6;
+        border-radius: 6px;
+        width: 100%;
+        background: #fff;
+    }
+    .form-area input:focus,
+    .form-area textarea:focus {
+        outline: 2px solid #0b2a6b55;
+        border-color: #0b2a6b;
+    }
+    .range {
+        margin: 10px 0 0;
+    }
+    .range small {
+        color: #888;
+    }
+    .rowcard {
+        border: 1px solid #dde1ea;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background: #fafbfd;
+    }
+    .rh {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    .rm {
+        border: 0;
+        background: none;
+        color: #b00;
+        cursor: pointer;
+        font: inherit;
+        font-size: 12px;
+    }
+    .btn {
+        font: inherit;
+        font-size: 14px;
+        padding: 8px 14px;
+        border: 1px solid #0b2a6b;
+        background: #fff;
+        color: #0b2a6b;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    .btn.primary {
+        background: #0b2a6b;
+        color: #fff;
+    }
+    .actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .hint {
+        font-size: 12px;
+        color: #666;
+    }
+    .pvt {
+        margin: 22px 0 0;
+    }
+    @media (max-width: 800px) {
+        .g2,
+        .g3,
+        .g4 {
+            grid-template-columns: 1fr;
+        }
+        .g9 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
 
-  /* Documento */
-  .sheet { max-width: 1100px; margin: 10px auto 30px; background: #fff; padding: 18px; box-shadow: 0 1px 6px #0002; }
-  .top { display: grid; grid-template-columns: 1fr 1fr 1fr; height: 64px; }
-  .logo-space { height: 64px; display: flex; align-items: flex-start; }
-  .logo-space img { max-height: 60px; max-width: 100%; object-fit: contain; }
-  .company { text-align: center; font-weight: 700; font-size: .95em; line-height: 1.9; padding-top: 4px; }
-  .lbl { font-weight: 700; font-size: .95em; }
-  .val { font-style: italic; font-weight: 700; }
-  .line { border-bottom: 1px solid #333; padding: 0 4px 2px; min-height: 1.4em; }
-  .r1 { display: grid; grid-template-columns: 1.15fr 1.45fr .9fr; gap: 10px; align-items: end; margin-top: 4px; }
-  .dates div { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 3px; }
-  .dates span { display: inline-block; width: 80px; min-height: 1.2em; text-align: center; border-bottom: 1px solid #333; }
-  .emp-title { text-align: center; font-weight: 700; font-size: .95em; margin: 6px 0 4px; width: 45%; }
-  .emp { display: grid; grid-template-columns: 45% 1fr; row-gap: 9px; }
-  .emp .cell { display: flex; gap: 8px; align-items: flex-end; min-height: 1.4em; }
-  .emp .cell.l { border-bottom: 1px solid #333; padding-bottom: 2px; }
-  .emp .cell.r { margin-left: 14px; }
-  table.main { width: 100%; border-collapse: collapse; margin-top: 12px; table-layout: fixed; }
-  .main th { background: #0b2a6b; color: #fff; text-align: center; padding: 5px 2px; height: 30px; border: 1px solid #fff; font-size: .9em; }
-  .main td { border: 1px solid #333; height: 16px; padding: 0 3px; overflow: hidden; }
-  .main td.in { background: #fdf3dc; }
-  .main td.tot { background: #e6e6e6; text-align: center; }
-  .main td.date { text-align: center; font-weight: 700; }
-  .cur { display: flex; justify-content: space-between; }
-  .main tfoot td { background: #e6e6e6; font-weight: 700; text-align: center; border: 1px solid #fff; height: 16px; }
-  .main tfoot td.dark { background: #999; }
-  .main tfoot td.white { background: #fff; border: 0; }
-  .totals { display: grid; grid-template-columns: 1fr 260px 12.5%; margin-top: 2px; }
-  .notes { display: flex; gap: 8px; }
-  .notes .lbl { color: #777; padding-top: 4px; white-space: nowrap; }
-  .nl { flex: 1; min-height: 34px; border-bottom: 1px solid #333; white-space: pre-wrap; }
-  .tl { grid-column: 2; }
-  .t { display: grid; grid-template-columns: 1fr 96px; margin-top: 1px; }
-  .t span { text-align: right; padding-right: 6px; font-weight: 700; color: #555; font-size: .95em; }
-  .t b { background: #e6e6e6; text-align: center; min-height: 16px; }
-  .t b.adv { background: #fff; border: 1px solid #333; }
-  .sign { display: grid; grid-template-columns: 12% 1fr 1fr 1fr; gap: 40px; margin-top: 44px; align-items: end; padding: 0 40px 0 30px; }
-  .sign div { border-top: 1px solid #999; text-align: center; font-size: .85em; font-weight: 700; color: #777; padding-top: 3px; }
-  .sign div span { display: block; }
+    /* Documento */
+    .sheet {
+        max-width: 1100px;
+        margin: 10px auto 30px;
+        background: #fff;
+        padding: 18px;
+        box-shadow: 0 1px 6px #0002;
+    }
+    .top {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        height: 64px;
+    }
+    .logo-space {
+        height: 64px;
+        display: flex;
+        align-items: flex-start;
+    }
+    .logo-space img {
+        max-height: 60px;
+        max-width: 100%;
+        object-fit: contain;
+    }
+    .company {
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.95em;
+        line-height: 1.9;
+        padding-top: 4px;
+    }
+    .lbl {
+        font-weight: 700;
+        font-size: 0.95em;
+    }
+    .val {
+        font-style: italic;
+        font-weight: 700;
+    }
+    .line {
+        border-bottom: 1px solid #333;
+        padding: 0 4px 2px;
+        min-height: 1.4em;
+    }
+    .r1 {
+        display: grid;
+        grid-template-columns: 1.15fr 1.45fr 0.9fr;
+        gap: 10px;
+        align-items: end;
+        margin-top: 4px;
+    }
+    .dates div {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-bottom: 3px;
+    }
+    .dates span {
+        display: inline-block;
+        width: 80px;
+        min-height: 1.2em;
+        text-align: center;
+        border-bottom: 1px solid #333;
+    }
+    .emp-title {
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.95em;
+        margin: 6px 0 4px;
+        width: 45%;
+    }
+    .emp {
+        display: grid;
+        grid-template-columns: 45% 1fr;
+        row-gap: 9px;
+    }
+    .emp .cell {
+        display: flex;
+        gap: 8px;
+        align-items: flex-end;
+        min-height: 1.4em;
+    }
+    .emp .cell.l {
+        border-bottom: 1px solid #333;
+        padding-bottom: 2px;
+    }
+    .emp .cell.r {
+        margin-left: 14px;
+    }
+    table.main {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+        table-layout: fixed;
+    }
+    .main th {
+        background: #0b2a6b;
+        color: #fff;
+        text-align: center;
+        padding: 5px 2px;
+        height: 30px;
+        border: 1px solid #fff;
+        font-size: 0.9em;
+    }
+    .main td {
+        border: 1px solid #333;
+        height: 16px;
+        padding: 0 3px;
+        overflow: hidden;
+    }
+    .main td.in {
+        background: #fdf3dc;
+    }
+    .main td.tot {
+        background: #e6e6e6;
+        text-align: center;
+    }
+    .main td.date {
+        text-align: center;
+        font-weight: 700;
+    }
+    .cur {
+        display: flex;
+        justify-content: space-between;
+    }
+    .main tfoot td {
+        background: #e6e6e6;
+        font-weight: 700;
+        text-align: center;
+        border: 1px solid #fff;
+        height: 16px;
+    }
+    .main tfoot td.dark {
+        background: #999;
+    }
+    .main tfoot td.white {
+        background: #fff;
+        border: 0;
+    }
+    .totals {
+        display: grid;
+        grid-template-columns: 1fr 260px 12.5%;
+        margin-top: 2px;
+    }
+    .notes {
+        display: flex;
+        gap: 8px;
+    }
+    .notes .lbl {
+        color: #777;
+        padding-top: 4px;
+        white-space: nowrap;
+    }
+    .nl {
+        flex: 1;
+        min-height: 34px;
+        border-bottom: 1px solid #333;
+        white-space: pre-wrap;
+    }
+    .tl {
+        grid-column: 2;
+    }
+    .t {
+        display: grid;
+        grid-template-columns: 1fr 96px;
+        margin-top: 1px;
+    }
+    .t span {
+        text-align: right;
+        padding-right: 6px;
+        font-weight: 700;
+        color: #555;
+        font-size: 0.95em;
+    }
+    .t b {
+        background: #e6e6e6;
+        text-align: center;
+        min-height: 16px;
+    }
+    .t b.adv {
+        background: #fff;
+        border: 1px solid #333;
+    }
+    .sign {
+        display: grid;
+        grid-template-columns: 12% 1fr 1fr 1fr;
+        gap: 40px;
+        margin-top: 44px;
+        align-items: end;
+        padding: 0 40px 0 30px;
+    }
+    .sign div {
+        border-top: 1px solid #999;
+        text-align: center;
+        font-size: 0.85em;
+        font-weight: 700;
+        color: #777;
+        padding-top: 3px;
+    }
+    .sign div span {
+        display: block;
+    }
 
-  @media print {
-    html, body { background: #fff; }
-    body { font-size: 7.5pt; }
-    .noprint { display: none !important; }
-    .sheet { max-width: none; margin: 0; padding: 0; box-shadow: none; }
-  }
+    @media print {
+        html,
+        body {
+            background: #fff;
+        }
+        body {
+            font-size: 7.5pt;
+        }
+        .noprint {
+            display: none !important;
+        }
+        .sheet {
+            max-width: none;
+            margin: 0;
+            padding: 0;
+            box-shadow: none;
+        }
+    }
 </style>
