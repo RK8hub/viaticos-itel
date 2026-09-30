@@ -307,7 +307,7 @@ const cols = [
                     .map(
                         (r, i) => `
         <div class="rowcard">
-          <div class="rh"><b>Día${i + 1}</b><button type="button" class="rm" data-rm="${i}" title="Quitar fila">Quitar ×</button></div>
+          <div class="rh"><b>Día ${i + 1}</b><button type="button" class="rm" data-rm="${i}" title="Quitar Día">Quitar ×</button></div>
           <div class="grid g3">
             <label>Departamento / lugar<input data-i="${i}" data-k="dep" value="${esc(r.dep)}" /></label>
             <label>Fecha<input type="date" data-i="${i}" data-k="date" value="${esc(r.date)}" /></label>
